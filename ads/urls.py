@@ -9,4 +9,5 @@ urlpatterns = [
     path('ad_update/<int:ad_id>/', views.AdUpdateView.as_view()),
     path('ad_delete/<int:ad_id>/', views.AddDeleteView.as_view()),
     path('search/', views.AdSearchView.as_view()),
+    path('search/', views.AdSearchView.as_view()),
 ]
