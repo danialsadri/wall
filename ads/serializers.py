@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class AdSerializer(serializers.ModelSerializer):
-    publisher = serializers.ReadOnlyField(source="user.username")
+    publisher = serializers.ReadOnlyField(source="publisher.username")
 
     class Meta:
         model = Ad
