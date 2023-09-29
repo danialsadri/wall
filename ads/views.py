@@ -17,7 +17,7 @@ class AdListView(APIView, StandardResultsSetPagination):
         ads = Ad.objects.filter(is_public=True)
         result = self.paginate_queryset(ads, request)
         ad_serializer = AdSerializer(instance=result, many=True)
-        return Response(data=ad_serializer.data, status=status.HTTP_200_OK)
+        return self.get_paginated_response(data=ad_serializer.data)
 
 
 class AdDetailView(APIView):
