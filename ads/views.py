@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -62,3 +63,14 @@ class AddDeleteView(APIView):
         ad = get_object_or_404(Ad, id=ad_id, is_public=True)
         ad.delete()
         return Response(data=None, status=status.HTTP_204_NO_CONTENT)
+
+
+class AdSearchView(APIView, StandardResultsSetPagination):
+    serializer_class = AdSerializer
+
+    def get(self, request: Request):
+        query = request.query_params.get('query')
+        queryset = Ad.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
+        result = self.paginate_queryset(queryset, request)
+        ad_serializer = AdSerializer(instance=result, many=True)
+        return Response(data=ad_serializer.data, status=status.HTTP_200_OK)
